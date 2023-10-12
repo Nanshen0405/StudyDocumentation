@@ -1,12 +1,18 @@
-# Nginx
+# Nginx 的使用
 
-> *Nginx* (engine x) 是一个高性能的[HTTP](https://baike.baidu.com/item/HTTP)和[反向代理](https://baike.baidu.com/item/反向代理/7793488)web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为[俄罗斯](https://baike.baidu.com/item/俄罗斯/125568)访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。
+> 前言
+
+&emsp;&emsp;<font face="consolas" >Nginx (engine x)</font> 是一个高性能的 <font face="consolas" >HTTP</font> 和反向代理 <font face="consolas" >web</font> 服务器，同时也提供了 IMAP/POP3/SMTP 服务。<font face="consolas" >Nginx</font> 是由伊戈尔 $·$ 赛索耶夫为<font color="powderBlue"><u>俄罗斯</u></font>访问量第二的 <font face="consolas" >Rambler.ru</font> 站点（俄文：Рамблер）开发的，第一个公开版本 0.1.0 发布于 2004 年 10 月 4 日。
+
+&nbsp;
+
+[TOC]
 
 
 
-# 一、Nginx基本概念
+# 一、什么是Nginx
 
-- Nginx基本概念
+- 基本概念
 - 正向代理
 - 反向代理
 - 负载均衡
@@ -17,14 +23,17 @@
 
 
 
-## 1.1、Nginx基本概念
+## 1.1、基本概念
 
-**Nginx是一款[轻量级](https://baike.baidu.com/item/轻量级/10002835)的[Web](https://baike.baidu.com/item/Web/150564) 服务器/[反向代理](https://baike.baidu.com/item/反向代理/7793488)服务器及[电子邮件](https://baike.baidu.com/item/电子邮件/111106)（IMAP/POP3）代理服务器，在BSD-like 协议下发行。**其特点是占有内存少，[并发](https://baike.baidu.com/item/并发/11024806)能力强，事实上Nginx的并发能力在同类型的网页服务器中表现较好，中国大陆使用Nginx网站用户有：百度、[京东](https://baike.baidu.com/item/京东/210931)、[新浪](https://baike.baidu.com/item/新浪/125692)、[网易](https://baike.baidu.com/item/网易/185754)、[腾讯](https://baike.baidu.com/item/腾讯/112204)、[淘宝](https://baike.baidu.com/item/淘宝/145661)等。Nginx可以作为静态页面的Web服务器，同时还支持CGI协议的动态语言。比如Perl、PHP等。但是不支持Java。Java程序只能通过Tomcat配合完成。nginx专为性能优化而开发，性能是其最重要的考量，实现上非常注重效率，能经受高负载的考验，有报告表明能支持高达 50, 000 个并发连接数。
+&emsp;&emsp;<font face="consolas" >Nginx</font> 是一款<font color="powderBlue" ><u>轻量级</u></font>的 <font face="consolas" color="powderBlue" >Web</font> 服务器、<font color="powderBlue" >反向代理</font>服务器及电子邮件（IMAP/POP3）代理服务器，在 BSD-like 协议下发行。其特点是占有内存少，<font color="powderBlue" >并发</font>能力强，事实上 Nginx 的并发能力在同类型的网页服务器中表现较好，中国大陆使用 [Nginx](https://nginx.org/en/) 网站用户有：[百度](https://www.baidu.com)、[京东](https://www.jd.com)、[新浪](https://www.weibo.com)、[网易](https://www.163.com)、[腾讯](https://www.qq.com)、[淘宝](https://www.taobao.com)等。nginx 可以作为静态页面的 Web 服务器，同时还支持 CGI 协议的动态语言。比如 Perl、PHP 等。但是不支持 Java，Java 程序只能通过 Tomcat 配合完成。[Nginx](<https://lnmp.org/nginx.html>) 专为性能优化而开发，性能是其最重要的考量，实现上非常注重效率，能经受高负载的考验，有报告表明能支持高达 50, 000 个并发连接数。
 
-<https://lnmp.org/nginx.html>
+![Nginx](图片/Nginx.png)
 
-> Nginx是什么，能做什么
+&nbsp;
 
+> nginx是什么，能做什么
+
+- 正向代理
 - 反向代理
 - 复杂均衡
 - 动静分离
@@ -35,110 +44,123 @@
 
 > 简介
 
-nginx不仅可以做反向代理，实现复杂均衡。还能用作正向代理来进行上网等功能。正向代理：如果把局域网外的Internet想象成一个巨大的资源库，则局域网中的客户端要访问Internet则需要通过代理服务器来访问，这种代理服务就称为**正向代理**。
+&emsp;&emsp;Nginx 不仅可以做反向代理，实现复杂均衡。还能用作正向代理来进行上网等功能。正向代理：如果把局域网外的Internet 想象成一个巨大的资源库，则局域网中的客户端要访问 Internet 则需要通过代理服务器来访问，这种代理服务就称为**正向代理**。
 
 ![正向代理](图片/正向代理.png)
 
-正向代理类似一个跳板机，代理访问外部资源
+&emsp;&emsp;正向代理类似一个跳板机，代理访问外部资源
 
-比如我们国内访问谷歌，直接访问访问不到，我们可以通过一个正向代理服务器，请求发到代理服，代理服务器能够访问谷歌，这样由代理去谷歌取到返回数据，再返回给我们，这样我们就能访问谷歌了
+&emsp;&emsp;比如我们国内访问谷歌，直接访问访问不到，我们可以通过一个正向代理服务器，请求发到代理服，代理服务器能够访问谷歌，这样由代理去谷歌取到返回数据，再返回给我们，这样我们就能访问谷歌了
 
-**正向代理的用途：**
+<table><tr><td bgcolor=Beige><center>正向代理的用途</center></td></tr></table>
 
-　　（1）访问原来无法访问的资源，如google
+1. 访问原来无法访问的资源，如：Google
+2. 可以做缓存，加速访问资源
+3. 对客户端访问授权，上网进行认证
+4. 代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息
 
-​    	（2） 可以做缓存，加速访问资源
-
-　　（3）对客户端访问授权，上网进行认证
-
-　　（4）代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息
+&nbsp;
 
 ## 1.3、反向代理
 
 > 简介
 
-反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，我们需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器的IP地址
+&emsp;&emsp;反向代理 —— 其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，我们需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器的IP地址
 
 ![反向代理](图片/反向代理.png)
 
+&nbsp;
 
+&emsp;&emsp;反向代理（<font face="consolas">Reverse Proxy</font>）实际运行方式是指以代理服务器来接受 Internet 上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给 Internet 上请求连接的客户端，此时代理服务器对外就表现为一个服务器。
 
-反向代理（Reverse Proxy）实际运行方式是指以代理服务器来接受internet上的连接请求，然后将请求转发给内部网络上的服务器，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个服务器
+&nbsp;
 
+> 反向代理的作用：
 
+- 保证内网的安全，阻止 Web 攻击，大型网站，通常将反向代理作为公网访问地址，Web 服务器是内网
 
-反向代理的作用：
+- 负载均衡，通过反向代理服务器来优化网站的负载
 
-（1）保证内网的安全，阻止web攻击，大型网站，通常将反向代理作为公网访问地址，Web服务器是内网
-
-（2）负载均衡，通过反向代理服务器来优化网站的负载
-
-
+&nbsp;
 
 ## 1.4、负载均衡
 
 > 简介
 
-客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服务器处理完毕之后，再将结果返回给客户端。
+&emsp;&emsp;客户端发送多个请求到服务器，服务器处理请求，有一些可能要与数据库进行交互，服务器处理完毕之后，再将结果返回给客户端。
 
-这种架构模式对于早期的系统相对单一，并发相对较少的情况下是比较适合的，成本也低。但是随着信息数量的的不断增长，访问量和数据量的飞速提升，以及系统业务的复杂度增加，这种架构会造成服务器响应客户端的请求日益缓慢，并发量特别大的时候，还容易造成服务器直接崩溃。很明显这是由于服务器性能的瓶颈造成的问题，那么如何解决这种情况呢？
+&emsp;&emsp;这种<font face="宋体">架构模式</font>对于早期的系统相对单一，并发相对较少的情况下是比较适合的，成本也低。但是随着信息数量的的不断增长，访问量和数据量的飞速提升，以及系统业务的复杂度增加，这种架构会造成服务器响应客户端的请求日益缓慢，并发量特别大的时候，还容易造成服务器直接崩溃。很明显这是由于服务器性能的瓶颈造成的问题，那么如何解决这种情况呢？
+
+&nbsp;
 
 ![负载均衡](图片/负载均衡.png)
 
-我们首先想到的可能是升级服务器的配置，比如提高CPU执行频率，加大内存等提高机器的物理性能来解决此问题，但是我们知道摩尔定理的日益失效，硬件的性能提升已经不能满足日益提升的需求了。最明显的一个例子，天猫双十一当天，某个热销产品的瞬时访问量是极其庞大的，那么类似于上面的系统架构，将机器都增加到现有的顶级物理配置，都是不能够满足需求的。那么该怎么办
+&nbsp;
 
-上面的分析我们去掉了增加服务器物理配置来解决问题的办法，也就是说纵向解决问题的办法行不通了，那么横向增加服务器的数量呢？这时候集群的概念产生了，单个服务器解决不了，那么我们就增加服务器的数量，然后将请求分发到各个服务器上，**将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器上，这也就是我们所说的负载均衡**。
+&emsp;我们首先想到的可能是升级服务器的配置，比如<font face="宋体">提高 CPU 执行频率，加大内存</font>等提高机器的物理性能来解决此问题，但是我们知道摩尔定理的日益失效，硬件的性能提升已经不能满足日益提升的需求了。最明显的一个例子，天猫双十一当天，某个热销产品的瞬时访问量是极其庞大的，那么类似于上面的系统架构，将机器都增加到现有的顶级物理配置，都是不能够满足需求的。那么该怎么办？
+
+&emsp;&emsp;上面的分析我们去掉了增加服务器物理配置来解决问题的办法，也就是说纵向解决问题的办法行不通了，那么横向增加服务器的数量呢？这时候集群的概念产生了，单个服务器解决不了，那么我们就增加服务器的数量，然后将请求分发到各个服务器上，**将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器上，这也就是我们所说的<font face="黑体" color="red">负载均衡</font>**。
+
+&nbsp;
 
 ## 1.5、动静分离
 
-> 介绍
+> 前言
 
-为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度，降低原来单个服务器的压力
+&emsp;&emsp;为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度，降低原来单个服务器的压力
 
 ![动静分离](图片/动静分离.png)
 
+&nbsp;
 
+## 1.6、nginx的优点
 
-## 1.6、Nginx的优点
+- 处理静态文件，索引文件以及自动索引；打开文件描述符缓冲。
+- 无缓存的反向代理加速，简单的负载均衡和容错。
+- FastCGI，简单的负载均衡和容错。
+- 模块化的结构。包括 Gzipping、Byte Ranges、Chunked Responses 以及 SSI-filter 等 filter。此外，如果由 FastCGI 或其它代理服务器处理单页中存在的多个SSI，则这项处理可以并行运行，而不需要相互等待。
+- 支持 SSL 和 TLSSNI。
 
-- 处理静态文件，索引文件以及自动索引；打开文件描述符缓冲．
-- 无缓存的反向代理加速，简单的负载均衡和容错．
-- FastCGI，简单的负载均衡和容错．
-- 模块化的结构。包括gzipping,   byte ranges, chunked responses,以及   SSI-filter等filter。如果由FastCGI或其它代理服务器处理单页中存在的多个SSI，则这项处理可以并行运行，而不需要相互等待。
-- 支持SSL   和 TLSSNI．
-
-
+&nbsp;
 
 # 二、Nginx的使用
 
+- 安装Nginx
 - 启动Nginx
 - Nginx常用命令
 - Nginx配置文件
 
 
 
-## 2.1、在Linux系统中安装Nginx
+## 2.1、安装Nginx
 
-1. 打开Linux系统终端，==ifconfig==命令查看其ip地址
+> 具体安装步骤如下：
+
+1. 打开 Linux 系统终端，`ifconfig` 命令查看其ip地址
 
 ![查看Linux系统IP地址](图片/查看Linux系统IP地址.png)
 
-2. 进入[Nginx官网](http://nginx.org)下载Nginx软件
+2. 进入[Nginx官网](http://nginx.org)下载 Nginx 软件压缩包
 
-![Nginx官网](图片/Nginx官网.png)
+![nginx官网](图片/nginx官网.png)
 
 3. 选择最新版本进行安装，(需要先使用远程连接工具连接Linux操作系统)
 
-不过多数情况下安装预编译的 Unit 二进制包是最佳选择;[官方](https://packages.nginx.org/unit/)二进制包适用于：
+   不过多数情况下安装预编译的 Unit 二进制包是最佳选择；[官方](https://packages.nginx.org/unit/)二进制包适用于：	
 
-- Amazon Linux、Amazon Linux 2
-- CentOS 6、7、8
-- Debian 9、10
-- Fedora 29、30、31、32、33
-- RHEL 6、7、8
-- Ubuntu 16.04、18.04、19.10、20.04、20.10、21.04
+   - Amazon Linux、Amazon Linux 2
 
-<https://www.nginx.org.cn/book/_book/>
+   - CentOS 6、7、8
+
+   - Debian 9、10
+
+   - Fedora 29、30、31、32、33
+
+   - RHEL 6、7、8
+
+   - Ubuntu 16.04、18.04、19.10、20.04、20.10、21.04
+
+   安装文档：<https://www.nginx.org.cn/book/_book/>
 
 ```sh
 # 需要有网络
@@ -174,61 +196,67 @@ Runtime details:
 | Log [file](https://unit.nginx.org/troubleshooting/#troubleshooting-log) | `/var/log/unit/unit.log`     |
 | Non-privileged [user and group](https://unit.nginx.org/howto/security/#security-apps) | `unit`                       |
 
- 
+ &nbsp;
 
-4. 手动安装需要先安装一些依赖，以CentOS 7为例
+4. 手动安装需要先安装一些依赖，以 CentOS7 为例
 
-<https://www.cnblogs.com/boonya/p/7907999.html>
+   <https://www.cnblogs.com/boonya/p/7907999.html>
 
-**① 第一步：安装 pcre**
+   &nbsp;
 
-> * 把安装压缩文件放到Linux系统中，
->
-> * 解压缩文件 `tar -xvf pcre-8.37.tar.gz`
->
-> * 进入解压目录，执行`./configure`
->
-> * 使用 `make && make install`
-> * 安装之后，使用命令，查看版本号 `pcre -config --version`
+   ① 第一步：安装 pcre
 
-```sh
-wget http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz
+   > * 把安装压缩文件放到Linux系统中，
+   >
+   > * 解压缩文件 `tar -xvf pcre-8.37.tar.gz`
+   >
+   > * 进入解压目录，执行`./configure`
+   >
+   > * 使用 `make && make install`
+   > * 安装之后，使用命令，查看版本号 `pcre -config --version`
 
-tar -xvf pcre-8.37.tar.gz
+   ```shell
+   wget http://downloads.sourceforge.net/project/pcre/pcre/8.37/pcre-8.37.tar.gz
+   
+   tar -xvf pcre-8.37.tar.gz
+   
+   # 解压文件
+   ./configure --prefix=指定安装的目录
+   # ./configure 完成后，回到pcre目录下执行make
+   # 再执行make install
+   
+   # make 命令执行不了的同学   。/configure后 最后一行会出现
+   # configure: error: You need a C++ compiler for C++ support.
+   # 安装一下这个即可：
+   yum install -y gcc gcc-c++
+   # 安装完毕后在执行 ./configure  在执行make 就OK了    我就是这样
+   
+   pcre -config --version
+   8.37
+   ```
 
-# 解压文件
-./configure --prefix=指定安装的目录
-# ./configure 完成后，回到pcre目录下执行make
-# 再执行make install
+   ② 第二步：安装 OpenSSL
 
-# make 命令执行不了的同学   。/configure后 最后一行会出现
-# configure: error: You need a C++ compiler for C++ support.
-# 安装一下这个即可：
-yum install -y gcc gcc-c++
-# 安装完毕后在执行 ./configure  在执行make 就OK了    我就是这样
+   ③ 第三步：安装 zlib
 
-pcre -config --version
-8.37
-```
+   ```shell
+   # 安装 OpenSSL 和 zlib
+   yum -y install make zlib zlib-devel gcc-c++ libtool openssl openssl-devel
+   # 一键安装上面四个依赖
+   yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+   ```
 
-**② 第二步：安装OpenSSL**
+   &nbsp;
 
-**③ 第三步：安装zlib**
+   ④ 第四步：安装 Nginx
 
-```sh
-# 安装OpenSSL和zlib
-yum -y install make zlib zlib-devel gcc-c++ libtool openssl openssl-devel
-# 一键安装上面四个依赖
-yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
-```
+   解压缩 nginx-xx.tar.gz 包并进入解压缩目录，执行 `./configure` 以及 `make&& make install`
 
-**④第四步：安装Nginx**
-
-解压缩nginx-xx.tar.gz包、并进入解压缩目录，执行`./configure`以及`make&& make install`
+&nbsp;
 
 ## 2.2、启动Nginx
 
-> 安装成功之后， 会在usr目录下多出一个文件夹/local/nginx,这个文件夹下有sbin目录有启动脚本
+> 安装成功之后， 会在 usr 目录下多出一个文件夹 <font face="consolas">/local/nginx</font>，这个文件夹下有 <font face="consolas">sbin</font> 目录有启动脚本
 
 ```sh
 # 切换到启动脚本目录下
@@ -245,13 +273,13 @@ netstat -nap | grep 8080
 
 效果如下图
 
-![启动Nginx](图片/启动Nginx.png)
+![启动nginx](图片/启动nginx.png)
 
+&nbsp;
 
+⑥ 第六步：查看 <font face="consolas">nginx/conf</font> 目录的 `nginx.conf` 配置文件
 
-**⑥第六步：查看在nginx/conf目录的nginx.conf配置文件**
-
-```sh
+```shell
 cd..
 cd..
 ls
@@ -260,61 +288,62 @@ cd conf
 vim nginx.conf
 ```
 
-![Nginx配置文件](图片/Nginx配置文件.png)
+![nginx配置文件](图片/nginx配置文件.png)
 
 通过 IP地址和端口号就可访问nginx，访问成功之后会出现这个界面
 
 ![成功启动提示](图片/成功启动提示.png)
 
 ```tex
+rooter
 ```
 
-
-
-rooter
+&nbsp;
 
 ## 2.3、Nginx常用命令
 
 > 前提条件
 
-使用Nginx操作命令前提是，必须进入到Nginx的目录下才行
+使用 nginx 操作命令前提是，必须进入到 nginx 的目录下才行
 
 1. `whereis software`：**查看software安装位置**
 
-- 具体操作如下
+   - 具体操作如下
 
-```shell
-bash: cd: /nginx: 没有那个文件或目录
-[rooter@localhost ~]$ whereis nginx
-nginx: /usr/local/nginx
-[rooter@localhost ~]$ cd /usr/local/nginx
-[rooter@localhost nginx]$ ls -l
-总用量 4
-drwx------. 2 nobody root    6 10月 25 14:00 client_body_temp
-drwxr-xr-x. 2 root   root 4096 10月 25 13:55 conf
-drwx------. 2 nobody root    6 10月 25 14:00 fastcgi_temp
-drwxr-xr-x. 2 root   root   40 10月 25 13:55 html
-drwxr-xr-x. 2 root   root   58 12月 17 13:47 logs
-drwx------. 2 nobody root    6 10月 25 14:00 proxy_temp
-drwxr-xr-x. 2 root   root   36 10月 25 13:55 sbin
-drwx------. 2 nobody root    6 10月 25 14:00 scgi_temp
-drwx------. 2 nobody root    6 10月 25 14:00 uwsgi_temp
-ooter@localhost nginx]$ cd sbin
-[rooter@localhost sbin]$ 
-```
+   ```shell
+   bash: cd: /nginx: 没有那个文件或目录
+   [rooter@localhost ~]$ whereis nginx
+   nginx: /usr/local/nginx
+   [rooter@localhost ~]$ cd /usr/local/nginx
+   [rooter@localhost nginx]$ ls -l
+   总用量 4
+   drwx------. 2 nobody root    6 10月 25 14:00 client_body_temp
+   drwxr-xr-x. 2 root   root 4096 10月 25 13:55 conf
+   drwx------. 2 nobody root    6 10月 25 14:00 fastcgi_temp
+   drwxr-xr-x. 2 root   root   40 10月 25 13:55 html
+   drwxr-xr-x. 2 root   root   58 12月 17 13:47 logs
+   drwx------. 2 nobody root    6 10月 25 14:00 proxy_temp
+   drwxr-xr-x. 2 root   root   36 10月 25 13:55 sbin
+   drwx------. 2 nobody root    6 10月 25 14:00 scgi_temp
+   drwx------. 2 nobody root    6 10月 25 14:00 uwsgi_temp
+   ooter@localhost nginx]$ cd sbin
+   [rooter@localhost sbin]$ 
+   ```
 
-2. **查看Nginx版本号：** `./nginx -v`
+   &nbsp;
+
+2. **查看nginx版本号：** `./nginx -v`
 
 ```shell
 [rooter@localhost sbin]$ ./nginx -v
 nginx version: nginx/1.12.0
 ```
 
-3. 启动Nginx：`./nginx`
-4. 关闭Nginx：`./nginx -s stop`
+3. 启动nginx：`./nginx`
+4. 关闭nginx：`./nginx -s stop`
 
 ```shell
-# 查看Nginx启动状态
+# 查看nginx启动状态
 root       1329      1  0 13:47 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx
 nobody     1330   1329  0 13:47 ?        00:00:00 nginx: worker process
 rooter     4472   4210  0 14:13 pts/0    00:00:00 grep --color=auto nginx
@@ -325,7 +354,7 @@ rooter     4472   4210  0 14:13 pts/0    00:00:00 grep --color=auto nginx
 rooter     4559   4210  0 14:16 pts/0    00:00:00 grep --color=auto nginx
 ```
 
-5. 重新加载Nginx
+5. 重新加载nginx
 
 ```shell
 [rooter@localhost sbin]$ sudo ./nginx -s reload
@@ -334,11 +363,15 @@ rooter     4559   4210  0 14:16 pts/0    00:00:00 grep --color=auto nginx
 
 6. 查看nginx进程
 
-`[rooter@localhost ~]$ ps aux| grep nginx`
+   ```shell
+   [rooter@localhost ~]$ ps aux| grep nginx
+   ```
 
 7. 安全退出
 
-`./nginx -s quit` 
+   ```shell
+   ./nginx -s quit
+   ```
 
 8. 查看配置文件是否正确
 
@@ -346,19 +379,21 @@ rooter     4559   4210  0 14:16 pts/0    00:00:00 grep --color=auto nginx
 
 ## 2.4、Nginx配置文件
 
-- Nginx配置文件的位置
-- Nginx配置文件实例
+- nginx配置文件的位置
+- nginx配置文件实例
 - 第一部分、全局块
 - 第二部分、events块
 - 第三部分、HTTP块
 
-### 2.4.1、Nginx配置文件的位置
+### 2.4.1、nginx配置文件的位置
 
-==/usr/local/nginx/conf/nginx.conf==
+`/usr/local/nginx/conf/nginx.conf`
 
-![Nginx配置文件的位置](图片/Nginx配置文件的位置.png)
+![nginx配置文件的位置](图片/nginx配置文件的位置.png)
 
-### 2.4.2、Nginx配置文件实例
+&nbsp;
+
+### 2.4.2、nginx配置文件实例
 
 ```shell
 # 第一部分、全局块
@@ -481,29 +516,31 @@ http {
 
 ```
 
-### ==**2.4.3、第一部分、全局块**==
+&nbsp;
 
-从配置文件开始到 events 块之间的内容，主要会设置一些影响 Nginx 服务器整体运行指令的配置命令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型已经配置文件的引入等。
+### 2.4.3、第一部分、全局块
 
-比如上面第一行配置的：`worker_processes 1; `
+&emsp;&emsp;从配置文件开始到 events 块之间的内容，主要会设置一些影响 nginx 服务器整体运行指令的配置命令，主要包括配置运行 nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型已经配置文件的引入等。
 
-这是 Nginx 服务器并发处理的关键配置，worker_processes 值越大，可以支持处理的并发处理量也越多，但是会受到硬件、软件等设备的制约，有上限。
+&emsp;&emsp;比如上面第一行配置的：`worker_processes 1; `
+
+&emsp;&emsp;这是 nginx 服务器并发处理的关键配置，worker_processes 值越大，可以支持处理的并发处理量也越多，但是会受到硬件、软件等设备的制约，有物理上限。
 
 
 
-### ==**2.4.4、第二部分、events块**==
+### 2.4.4、第二部分、events块
 
 比如上面的配置：`worker_connections 1024;`
 
-events 块涉及到的指令主要是影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启多对多、work_process 下的网络连接进行序列化、是否允许同时接受多个网络连接、选取哪种事件驱动模型来处理连接请求、每个 work_process 可以支持的最大连接数
+events 块涉及到的指令主要是影响 nginx 服务器与用户的网络连接，常用的设置包括是否开启多对多、work_process 下的网络连接进行序列化、是否允许同时接受多个网络连接、选取哪种事件驱动模型来处理连接请求、每个 work_process 可以支持的最大连接数
 
 上述例子就表示每个 work_process 支持的最大连接数为 1024
 
-这部分的配置对 Nginx 的性能影响较大，在实际应用可以灵活配置
+这部分的配置对 nginx 的性能影响较大，在实际应用可以灵活配置
 
+&nbsp;
 
-
-### ==**2.4.5、第三部分、HTTP块**==
+### 2.4.5、第三部分、HTTP块
 
 ```shell
 # 第三部分、HTTP块
@@ -618,26 +655,28 @@ http {
 
 这算是 Nginx 服务器配置中改动最频繁的部分、代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里
 
-需要注意的是： HTTP块也可以包括==HTTP全局块、server块==
+需要注意的是： HTTP 块也可以包括：HTTP 全局块和server 块
 
-
+&nbsp;
 
 #### 2.4.5.1、HTTP全局块
 
 HTTP全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求上限等等
 
+&nbsp;
+
 #### 2.4.5.2、server块
 
-这块和虚拟主机有密切关系，虚拟主机从用户角度看和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。
+&emsp;&emsp;这块和虚拟主机有密切关系，虚拟主机从用户角度看和一台独立的硬件主机是完全一样的，该技术的产生是为了节省互联网服务器硬件成本。
 
-每个 HTTP 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机
+&emsp;&emsp;每个 HTTP 块可以包括多个 server 块，而每个 server 块就相当于一个虚拟主机
 
-而每个 server 块也分为全局 server 块，以及可以同时包含多个 location 块
+&emsp;&emsp;而每个 server 块也分为全局 server 块，以及可以同时包含多个 location 块
 
 - 全局server块：最常见的配置是本虚拟机主机的监听配置和本虚拟主机的名称或 IP 配置
--  location 块：一个server块可以配置多个location块。这块的主要作用就是基于 Nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（也可以是IP）之外的字符串（例如：前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行
+-  location 块：一个server块可以配置多个location块。这块的主要作用就是基于 nginx 服务器接收到的请求字符串（例如 server_name/uri-string），对虚拟主机名称（也可以是IP）之外的字符串（例如：前面的 /uri-string）进行匹配，对特定的请求进行处理。地址定向、数据缓存和应答控制等功能，还有许多第三方模块的配置也在这里进行
 
-
+&nbsp;
 
 ## 2.5、防火墙设置
 
@@ -664,13 +703,16 @@ service firewall restart
 ## 2.6、配置文件详解
 
 - 配置文件实例说明
+- server_name和location
+
+&nbsp;
 
 ### 2.6.1、配置文件实例说明
 
 ```txt
-######Nginx配置文件nginx.conf中文详解#####
+######nginx配置文件nginx.conf中文详解#####
 
-#定义Nginx运行的用户和用户组
+#定义nginx运行的用户和用户组
 user www www;
 
 #nginx进程数，建议设置为等于CPU总核心数。
@@ -749,7 +791,7 @@ http
     #charset utf-8;
 
     #服务器名字的hash表大小
-    #保存服务器名字的hash表是由指令server_names_hash_max_size 和server_names_hash_bucket_size所控制的。参数hash bucket size总是等于hash表的大小，并且是一路处理器缓存大小的倍数。在减少了在内存中的存取次数后，使在处理器中加速查找hash表键值成为可能。如果hash bucket size等于一路处理器缓存的大小，那么在查找键的时候，最坏的情况下在内存中查找的次数为2。第一次是确定存储单元的地址，第二次是在存储单元中查找键 值。因此，如果Nginx给出需要增大hash max size 或 hash bucket size的提示，那么首要的是增大前一个参数的大小.
+    #保存服务器名字的hash表是由指令server_names_hash_max_size 和server_names_hash_bucket_size所控制的。参数hash bucket size总是等于hash表的大小，并且是一路处理器缓存大小的倍数。在减少了在内存中的存取次数后，使在处理器中加速查找hash表键值成为可能。如果hash bucket size等于一路处理器缓存的大小，那么在查找键的时候，最坏的情况下在内存中查找的次数为2。第一次是确定存储单元的地址，第二次是在存储单元中查找键 值。因此，如果nginx给出需要增大hash max size 或 hash bucket size的提示，那么首要的是增大前一个参数的大小.
     server_names_hash_bucket_size 128;
 
     #客户端请求头部的缓冲区大小。这个可以根据你的系统分页大小来设置，一般一个请求的头部大小不会超过1k，不过由于一般系统分页都要大于1k，所以这里设置为分页大小。分页大小可以用命令getconf PAGESIZE取得。
@@ -968,11 +1010,11 @@ http
         }
          
          
-        #设定查看Nginx状态的地址
-        location /NginxStatus {
+        #设定查看nginx状态的地址
+        location /nginxStatus {
             stub_status on;
             access_log on;
-            auth_basic "NginxStatus";
+            auth_basic "nginxStatus";
             auth_basic_user_file confpasswd;
             #htpasswd文件的内容可以用apache提供的htpasswd工具来产生。
         }
@@ -1065,7 +1107,7 @@ location / {
 
 <https://blog.csdn.net/weixin_42167759/article/details/85049546>
 
-# 三、Nginx配置实例
+# 三、nginx配置实例
 
 - 反向代理
 - 负载均衡
@@ -1122,7 +1164,7 @@ server{
   listen 80;
   # server_name 47.101.172.28;
   server_name server.wikiwl.com;
-  # 反向代理Nginx服务端 
+  # 反向代理nginx服务端 
   location / {
     proxy_pass http://localhost:8888;
   }
@@ -1136,67 +1178,77 @@ server{
 
 > 负载均衡的实质是请求均分到各个服务器中，不会发生一个服务器有过多请求的问题
 
+&nbsp;
+
 ### 3.3.1、实现方式
 
-1.轮询
+1. 轮询
 
-默认方式，每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。虽然这种方式简便、成本低廉。但缺点是：可靠性低和负载分配不均衡。适用于图片服务器集群和纯静态页面服务器集群。
+   默认方式，每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。虽然这种方式简便、成本低廉。但缺点是：可靠性低和负载分配不均衡。适用于图片服务器集群和纯静态页面服务器集群。
 
-2.weight（权重分配）
+&nbsp;
 
-指定轮询几率，权重越高，在被访问的概率越大，用于后端服务器性能不均的情况。
+2. weight（权重分配）
 
-```conf
-# 当Nginx每收到6个请求，会把其中的1个转发给8001，把其中的2个转发给8002，把其中的3个转发给8003。
-upstream hellolearn{ 
-    server 127.0.0.1:8001 weight=1; 
-    server 127.0.0.1:8002 weight=2; 
-    server 127.0.0.1:8003 weight=3;
-}
-```
+   指定轮询几率，权重越高，在被访问的概率越大，用于后端服务器性能不均的情况。
 
-3.ip_hash
+   ```shell
+   # 当nginx每收到6个请求，会把其中的1个转发给8001，把其中的2个转发给8002，把其中的3个转发给8003。
+   upstream hellolearn{ 
+       server 127.0.0.1:8001 weight=1; 
+       server 127.0.0.1:8002 weight=2; 
+       server 127.0.0.1:8003 weight=3;
+   }
+   ```
 
-每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+&nbsp;
 
-```
-upstream hellolearn{ 
-    ip_hash; 
-    server 127.0.0.1:8001;
-    server 127.0.0.1:8002;
-    server 127.0.0.1:8003;
-}
-```
+3. ip_hash
 
-4.fair（第三方）
+   每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
 
-按后端服务器的响应时间分配，响应时间短的优先分配，依赖第三方插件 nginx-upstream-fair，需要先安装。
+   ```shell
+   upstream hellolearn{ 
+       ip_hash; 
+       server 127.0.0.1:8001;
+       server 127.0.0.1:8002;
+       server 127.0.0.1:8003;
+   }
+   ```
 
-```conf
-upstream hellolearn{ 
-    fair; 
-    server 127.0.0.1:8001;
-    server 127.0.0.1:8002;
-    server 127.0.0.1:8003;
-}
-```
+&nbsp;
 
-5.url_hash（第三方）
+4. fair（第三方）
 
-按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。在upstream中加入hash语句，hash_method是使用的hash算法。
+   按后端服务器的响应时间分配，响应时间短的优先分配，依赖第三方插件 nginx-upstream-fair，需要先安装。
 
-```conf
-// nginx 1.7.2版本后，已经集成了url hash功能，可直接使用，无需安装三方模块。
-upstream hellolearn{ 
-    server 127.0.0.1:8001;
-    server 127.0.0.1:8002;
-    server 127.0.0.1:8003;
-    hash $request_uri; 
-    hash_method crc32; 
-}
-```
+   ```shell
+   upstream hellolearn{ 
+       fair; 
+       server 127.0.0.1:8001;
+       server 127.0.0.1:8002;
+       server 127.0.0.1:8003;
+   }
+   ```
 
-> Tips: 负载均衡调度中的状态
+5. url_hash（第三方）
+
+   按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。在upstream中加入hash语句，hash_method是使用的hash算法。
+
+   ```shell
+   # nginx 1.7.2版本后，已经集成了url hash功能，可直接使用，无需安装三方模块。
+   upstream hellolearn{ 
+       server 127.0.0.1:8001;
+       server 127.0.0.1:8002;
+       server 127.0.0.1:8003;
+       hash $request_uri; 
+       hash_method crc32; 
+   }
+   ```
+
+   
+
+> 冷知识：负载均衡调度中的状态
 >
 > - down：当前的server暂时不参与负载均衡
 >
@@ -1216,7 +1268,7 @@ upstream hellolearn{
 > }
 > ```
 
-
+&nbsp;
 
 ### 3.2.2、具体配置
 
@@ -1318,6 +1370,8 @@ http {
 }
 // 3次请求分别命中了3个实例
 ```
+
+&nbsp;
 
 ### 3.2.3、进阶配置
 
@@ -1469,22 +1523,29 @@ say hello.
 red or blue or black
 ```
 
-> 在nginx.conf末尾处中追加了一组upstream块和两组server块，其中两组server块共计包含5组location，上图中的5个演示效果，正是对应上末尾追加的5个location块的匹配规则的。
+&nbsp;
 
+> 在 nginx.conf 末尾处中追加了一组 upstream 块和两组 server 块，其中两组 server 块共计包含 5 组 location，上图中的 5 个演示效果，正是对应上末尾追加的 5 个 location 块的匹配规则的。
 
+&nbsp;
 
 ## 3.3、动静分离
 
 > 实现效果
 
-实现某个地址能访问到静态资源，而另一个地址能访问到HTML文件
+实现某个地址能访问到静态资源，而另一个地址能访问到 HTML 文件
 
-1、准备工作
-（1）在linux系统上创建一个静态资源文件夹。
-mkdir -r /data/image
-mkdir -r /data/www
-（2）在imgae文件夹中放入图片，在www文件夹中放入html文件。
-2、具体配置
+1. 准备工作
+   （1）在linux系统上创建一个静态资源文件夹。
+
+   ```shell
+   mkdir -r /data/image
+   mkdir -r /data/www
+   ```
+
+   （2）在 imgae 文件夹中放入图片，在 www 文件夹中放入 html 文件。
+
+2. 具体配置
 
 ```conf
 server {
@@ -1514,12 +1575,12 @@ http://192.168.17.129/image/1.jpg
 
 > 简介
 
-nginx的高可用集群配置 主要是用来解决nginx挂了之后无法工作的问题。因此通过虚拟的ip指向多个nginx，这样一个nginx宕机之后会自动从备份的nginx执行服务。.
+nginx 的高可用集群配置主要是用来解决 nginx 挂了之后无法工作的问题。因此通过虚拟的 ip 指向多个 nginx，这样一个 nginx 宕机之后会自动从备份的 nginx 执行服务。.
 
 <https://www.cnblogs.com/zzmx0/p/13338929.html?utm_source=tuicool>
 
 
 
-# 四、Nginx原理
+# 四、nginx原理
 
 <http://tengine.taobao.org/book/chapter_02.html>
